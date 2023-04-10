@@ -77,9 +77,40 @@ WSGI_APPLICATION = 'django_settings.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pgs_db',
+        'USER': 'pgs_usr',
+        'PASSWORD': '12345Qwerty!',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    },
+    'extra': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        'TIMEOUT': '120',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    'extra': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'django_ram_cache_table',
+    },
+    'special': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'django_cache_table',
+        'TIMEOUT': '120',
+        'OPTIONS': {
+            'MAX_ENTIES': 200,
+        }
+    },
 }
 
 
